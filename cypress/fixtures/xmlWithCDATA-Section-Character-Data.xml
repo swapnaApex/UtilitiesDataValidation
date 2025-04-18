@@ -1,0 +1,7 @@
+<script>
+    <![CDATA[
+        if (a < b && b > c) {
+            console.log("This is CDATA!");
+        }
+    ]]>
+</script>

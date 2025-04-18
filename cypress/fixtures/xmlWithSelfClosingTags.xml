@@ -1,0 +1,4 @@
+<tasks>
+    <task id="1" status="done"/>
+    <task id="2" status="pending"/>
+</tasks>
