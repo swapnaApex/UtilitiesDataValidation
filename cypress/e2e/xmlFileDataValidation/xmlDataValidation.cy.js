@@ -197,6 +197,21 @@ describe("Validate XML File", () => {
 });
 
 describe("XML Schema Validation", () => {
+  /*
+  It checks that the XML file passes schema validation.
+  This calls a custom Cypress task called "validateXml" (which is defined in cypress.config.js).
+  It passes two parameters:
+  xmlFile: the name of the XML file to validate.
+  xsdFile: the name of the XSD schema file to validate against.
+  Both files are located in the cypress/fixtures/ folder.
+  After the task runs, the test receives a result object.
+  result.valid is a Boolean:
+  true means the XML passed validation.
+  false means it didn’t.
+  the test uses an assertion:
+  expect(...).to.be.true ensures the XML is valid.
+  if it's not valid, the error(s) are converted to a string using JSON.stringify() and shown in the test output for easier debugging.
+  */
   it("should validate XML against XSD schema", () => {
     cy.task("validateXml", {
       xmlFile: "formData.xml",
@@ -207,6 +222,20 @@ describe("XML Schema Validation", () => {
     });
   });
 
+  /*
+  It checks that the XML file passes schema validation.
+  This calls a custom Cypress task called "validateXml" (which is defined in cypress.config.js).
+  It passes two parameters:
+  xmlFile: the name of the XML file to validate.
+  xsdFile: the name of the XSD schema file to validate against.
+  Both files are located in the cypress/fixtures/ folder.
+  After the task runs, the test receives a result object.
+  result.valid is a Boolean:
+  true means the XML passed validation.
+  false means it didn’t.
+  the test uses an assertion:
+  expect(...).to.be.false ensures the XML is Invalid.
+  */
   it("should validate XML against XSD schema", () => {
     cy.task("validateXml", {
       xmlFile: "formData.xml",
