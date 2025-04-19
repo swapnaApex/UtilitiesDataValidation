@@ -1,4 +1,3 @@
-// cypress/integration/validateXmlTest.js
 import { validateXml } from "../../support/utils/validateXml";
 
 describe("Validate XML File", () => {
@@ -194,5 +193,27 @@ describe("Validate XML File", () => {
         expect(isValid).to.be.false; // XML is invalid (Illegal Root Declaration (like JSON) XML file)
       }
     );
+  });
+});
+
+describe("XML Schema Validation", () => {
+  it("should validate XML against XSD schema", () => {
+    cy.task("validateXml", {
+      xmlFile: "formData.xml",
+      xsdFile: "schema.xsd",
+    }).then((result) => {
+      expect(result.valid, JSON.stringify(result.errors || result.error)).to.be
+        .true; // the XML is valid
+    });
+  });
+
+  it("should validate XML against XSD schema", () => {
+    cy.task("validateXml", {
+      xmlFile: "formData.xml",
+      xsdFile: "invalidSchema.xsd",
+    }).then((result) => {
+      expect(result.valid, JSON.stringify(result.errors || result.error)).to.be
+        .false; // the XML is invalid
+    });
   });
 });

@@ -13,6 +13,7 @@
     "cypress": "^14.2.0"
   },
   "dependencies": {
-    "fast-xml-parser": "^5.2.0"
+    "fast-xml-parser": "^5.2.0",
+    "libxmljs": "^1.0.11"
   }
 }
