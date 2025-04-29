@@ -22,7 +22,7 @@ describe("Validate Multiple XML File", () => {
         testFiles.map((filePath) =>
           cy.readFile(filePath).then((xmlContent) => {
             const isValid = validateXml(xmlContent);
-            expect(isValid, `${filePath} should be valid`).to.be.false; // Valid XML files
+            expect(isValid, `${filePath} should be valid`).to.be.true; // Valid XML files
           })
         )
       );
