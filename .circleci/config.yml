@@ -1,12 +1,25 @@
 version: 2.1
-orbs:
-  # "cypress-io/cypress@3" installs the latest published
-  # version "s.x.y" of the orb. We recommend you then use
-  # the strict explicit version "cypress-io/cypress@3.x.y"
-  # to lock the version and prevent unexpected CI changes
-  cypress: cypress-io/cypress@3
+
+executors:
+  cypress-executor:
+    docker:
+      - image: cypress/browsers:node18.12.0-chrome107-ff106
+    working_directory: ~/repo
+
+jobs:
+  run-tests:
+    executor: cypress-executor
+    steps:
+      - checkout
+      - run: npm ci
+      - run: npx cypress run
+      - store_artifacts:
+          path: cypress/videos
+      - store_artifacts:
+          path: cypress/screenshots
+
 workflows:
-  build:
+  version: 2
+  test:
     jobs:
-      - cypress/run: # "run" job comes from "cypress" orb
-          start-command: "npm run start"
+      - run-tests
