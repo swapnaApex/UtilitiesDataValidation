@@ -1,25 +1,8 @@
-version: 2.1
-
-executors:
-  cypress-executor:
-    docker:
-      - image: cypress/browsers:node18.12.0-chrome107-ff106
-    working_directory: ~/repo
-
-jobs:
-  run-tests:
-    executor: cypress-executor
-    steps:
-      - checkout
-      - run: npm ci
-      - run: npx cypress run
-      - store_artifacts:
-          path: cypress/videos
-      - store_artifacts:
-          path: cypress/screenshots
-
+version: "2.1"
+orbs:
+  cypress: cypress-io/cypress@3
 workflows:
-  version: 2
-  test:
+  use-my-orb:
     jobs:
-      - run-tests
+      - cypress/run:
+          cypress-command: npx cypress run --component
