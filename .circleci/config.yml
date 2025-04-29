@@ -6,10 +6,3 @@ workflows:
     jobs:
       - cypress/run:
         cypress-command: npx cypress run --e2e
-        store_artifacts: true
-        store_test_results: true
-        post-steps:
-          - store_artifacts:
-            path: cypress/results
-          - store_test_results:
-            path: cypress/results
