@@ -5,4 +5,4 @@ workflows:
   use-my-orb:
     jobs:
       - cypress/run:
-          cypress-command: npx cypress run --component
+          cypress-command: npx cypress run --e2e
