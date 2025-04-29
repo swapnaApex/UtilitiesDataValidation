@@ -1,4 +1,5 @@
 // cypress/support/utils/validateXml.js
+import { XMLValidator } from "fast-xml-parser";
 
 // Function to validate XML string by parsing it
 export function validateXml(xmlString) {
@@ -41,4 +42,43 @@ export function saveXmlFromApi(url, fileName) {
       data: response.body,
     });
   });
+}
+
+/*
+This function takes an XML string as input, validates whether it's well-formed using the fast-xml-parser package, and logs the result to Cypress using cy.log. It's designed to be used inside Cypress tests.
+This exports the function so it can be imported and used in Cypress test files.
+It accepts one argument: xml, which should be a string containing XML data.
+Begins a try block to catch any unexpected errors (e.g., bad input or parsing failure).
+Ensures the input is a string.
+If not, it throws an error to be caught below.
+Calls XMLValidator.validate() from fast-xml-parser.
+Returns true if XML is valid, or an error object ({ err: { msg, line, col } }) if invalid.
+The option { allowBooleanAttributes: true } allows attributes like disabled without ="true".
+If XML is valid, it logs a success message using cy.log() and returns true.
+If XML is not valid, it logs the error message, line, and column where the parsing failed.
+Returns false.
+Catches unexpected errors, like null input or internal failures.
+Logs a generic exception message and returns false.
+*/
+export function isWellFormedWithFastParser(xml) {
+  try {
+    if (typeof xml !== "string") {
+      throw new Error("Input is not a valid XML string.");
+    }
+
+    const result = XMLValidator.validate(xml, { allowBooleanAttributes: true });
+
+    if (result === true) {
+      cy.log(" XML is well-formed.");
+      return true;
+    } else {
+      cy.log(
+        ` XML Error: ${result.err.msg} at line ${result.err.line}, column ${result.err.col}`
+      );
+      return false;
+    }
+  } catch (e) {
+    cy.log(` Exception while validating XML: ${e.message}`);
+    return false;
+  }
 }
